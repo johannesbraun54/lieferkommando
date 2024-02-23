@@ -31,29 +31,53 @@ import { ShoppingBasketService } from '../service/shopping-basket.service';
 })
 export class OrderComponent {
 loading = false;
-birthDate: any;
+birthDate: Date = new Date();
 user = new User();
 meal = new Meal();
-
-purchase = [{
-  amounts: this.shoppingBasketService.amounts,
-  product : this.shoppingBasketService.localShoppingBasket,
-  prices: this.shoppingBasketService.prices
-}]
+firestore: Firestore = inject(Firestore);
+purchaseInJson!:any;
 
 constructor(public shoppingBasketService : ShoppingBasketService){
-  this.shoppingBasketService.getPurchase();
+this.shoppingBasketService.getPurchase();
 }
 
+getActuallyTime(){
+const currentDate: Date = new Date();
 
+const options: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+};
 
-getPurchases(){
-
+const formattedDate: string = currentDate.toLocaleDateString('de-DE', options);
+this.shoppingBasketService.purchase.purchaseTime = formattedDate;
 }
 
-getUser(){
-  this.user.purchases = this.shoppingBasketService.purchase
+getPurchaseJson(){
+  this.shoppingBasketService.purchase.toJson();
+  this.purchaseInJson = this.shoppingBasketService.purchase.toJson();
+  console.log('json', this.purchaseInJson);
+}
+
+getOrder(){
+  this.getActuallyTime();
+  this.getPurchaseJson();
+  this.user.purchases = this.purchaseInJson;
   console.log(this.user);
+  this.user.birthDate = this.birthDate.getTime();
+    this.loading = true;
+    addDoc(this.getUserDataRef(), this.user.toJson())
+    .catch((err) => {
+      console.error(err)
+    })
+    .then((result:any) => {
+      this.loading = false;
+    })
+}
+
+getUserDataRef(){
+  return collection(this.firestore ,' users');
 }
 
 

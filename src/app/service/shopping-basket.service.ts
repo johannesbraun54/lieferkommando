@@ -68,6 +68,7 @@ endSum!:number;
        let price = this.prices[i];
        this.subTotal = sum += price
        this.endSum = this.subTotal + 1.99
+       this.purchase.totalAmount = this.endSum;
     }
   }
 
