@@ -1,0 +1,30 @@
+.order-container{
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 32px;
+}
+
+.user-data-container{
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid #7f7f7f;
+    border-radius: 16px;
+    padding: 32px;
+    margin-top: 32px;
+}
+
+.personal-user-data{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    mat-form-field{
+        width: 45%;
+        max-width: 440px;
+    }
+}
+
+.adress-user-data{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
