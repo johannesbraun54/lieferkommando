@@ -77,7 +77,7 @@ getOrder(){
 }
 
 getUserDataRef(){
-  return collection(this.firestore ,' users');
+  return collection(this.firestore ,'users');
 }
 
 
