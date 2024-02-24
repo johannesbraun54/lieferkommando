@@ -4,12 +4,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { User } from '../models/user.class';
-import { FormBuilder, FormsModule, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroupDirective, FormsModule, NgForm, Validators } from '@angular/forms';
 import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgIf } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { ErrorStateMatcher, MatNativeDateModule } from '@angular/material/core';
 import { Meal } from '../models/meal.class';
 import { ShoppingBasketService } from '../service/shopping-basket.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,6 +18,12 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 
 @Component({
@@ -48,19 +54,16 @@ meal = new Meal();
 firestore: Firestore = inject(Firestore);
 purchaseInJson!:any;
 step = 0;
-
+firstName: FormControl = new FormControl('', Validators.minLength(2));
+lastName: FormControl = new FormControl('', Validators.minLength(2));
+emailInput: FormControl = new FormControl('', Validators.email);
+street: FormControl = new FormControl('', Validators.minLength(5));
+zipCode: FormControl = new FormControl('', Validators.minLength(5));
+city: FormControl = new FormControl('', Validators.minLength(3));
 
 
 constructor(public shoppingBasketService : ShoppingBasketService){
 this.shoppingBasketService.getPurchase();
-}
-
-onSubmit(nameForm: NgForm){
-  if(nameForm.valid){
-    console.log('nameform is valid');
-  }else{
-    console.log('nameform is not valid');
-  }
 }
 
 setStep(index: number) {

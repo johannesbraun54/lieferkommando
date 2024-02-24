@@ -1,132 +1,157 @@
 <div class="order-container">
 
-  <span class="order-headline">
-    <h1>Kasse</h1>
-    <h1>Braun's Burger Bude</h1>
-  </span>
-   
+    <span class="order-headline">
+      <h1>Kasse</h1>
+      <h1>Braun's Burger Bude</h1>
+    </span>
+     
+    <form (submit)="getOrder()" ngNativeValidate>
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Dein Name
+            </mat-panel-title>
+              <mat-icon>account_circle</mat-icon>
+          </mat-expansion-panel-header>
+  
+          <div  class="order-info">
+  
+            <div class="inputConti">
+              <input [(ngModel)]="user.firstName" [formControl]="firstName" class="myInput" required placeholder="Your first name" type="text" name="firstName">
+              <mat-icon *ngIf="firstName.status == 'INVALID' && firstName.dirty">cancel</mat-icon>
+              <mat-icon *ngIf="firstName.status == 'VALID' ">check_circle</mat-icon>
 
-    <mat-accordion class="example-headers-align">
-      <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Dein Name
-          </mat-panel-title>
-            <mat-icon>account_circle</mat-icon>
-        </mat-expansion-panel-header>
+              <input [(ngModel)]="user.lastName" [formControl]="lastName" class="myInput" required placeholder="Your last name" type="text" name="lastName">
+              <mat-icon *ngIf="lastName.status == 'INVALID' && lastName.dirty">cancel</mat-icon>
+              <mat-icon *ngIf="lastName.status == 'VALID' ">check_circle</mat-icon>
+            </div>
+  
+          </div>
+      
+  
+          <mat-action-row>
+            <button mat-button color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      
+        <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              E-mail
+            </mat-panel-title>
+              <mat-icon>mail</mat-icon>
+          </mat-expansion-panel-header>
+          <div class="order-info">
 
-        <div>
-          <form (ngSubmit)="onSubmit(nameForm)" class="order-info" #nameForm="ngForm">
-            <mat-form-field required appearance="outline" name="firstName">
-              <mat-label>Vorname</mat-label>
-              <input [disabled]="loading" [(ngModel)]="user.firstName" matInput placeholder="First name" name="firstName" minlength="">
+            <div class="emailInputConti">
+              <input [(ngModel)]="user.email" [formControl]="emailInput" class="myEmailInput" required placeholder="Your email" type="text" name="emailInput">
+              <mat-icon *ngIf="emailInput.status == 'INVALID' && emailInput.dirty">cancel</mat-icon>
+              <mat-icon *ngIf="emailInput.status == 'VALID' ">check_circle</mat-icon>
+            </div>
+  
+          </div>
+      
+          <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+            <button mat-button color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Geburtstag
+            </mat-panel-title>
+              <mat-icon>date_range</mat-icon>
+          </mat-expansion-panel-header>
+          <div class="order-info">
+    
+          <mat-form-field appearance="outline" class="full-width" name="birthDate">
+              <mat-label>Geburtstag</mat-label>
+              <input [(ngModel)]="user.birthDate" [disabled]="loading" [(ngModel)]="birthDate" matInput placeholder="Placeholder" [matDatepicker]="picker1" name="birthDate">
+              <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
-    
-            <mat-form-field  appearance="outline" name="lastName">
-              <mat-label>Nachname</mat-label>
-              <input [disabled]="loading" [(ngModel)]="user.lastName" matInput placeholder="Last name" name="lastName">
-            </mat-form-field>
-          </form>
-        </div>
-    
+          </div>
+      
+          <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+            <button mat-button color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      
+        <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+            Deine Adresse
+            </mat-panel-title>
+              <mat-icon>map</mat-icon>
+          </mat-expansion-panel-header>
+      
+          <div class="order-info">
 
-        <mat-action-row>
-          <button mat-button color="primary" (click)="nextStep()">Next</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-    
-      <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            E-mail und Geburtstag
-          </mat-panel-title>
-            <mat-icon>date_range</mat-icon>
-        </mat-expansion-panel-header>
-        <div class="order-info">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Email</mat-label>
-            <input [disabled]="loading" [(ngModel)]="user.email" matInput placeholder="email">
-        </mat-form-field>
+            <div class="inputConti">
+              <input [(ngModel)]="user.street" [formControl]="street" class="myInput" required placeholder="Straße und Hausnummer" type="text" name="street">
+              <mat-icon *ngIf="street.status == 'INVALID' && street.dirty">cancel</mat-icon>
+              <mat-icon *ngIf="street.status == 'VALID' ">check_circle</mat-icon>
+
+              <input [(ngModel)]="user.zipCode" [formControl]="zipCode" class="myInput" required placeholder="Postleitzahl" type="number" name="lastName">
+              <mat-icon *ngIf="zipCode.status == 'INVALID' && zipCode.dirty">cancel</mat-icon>
+              <mat-icon *ngIf="zipCode.status == 'VALID' ">check_circle</mat-icon>
+
+              <input [(ngModel)]="user.city" [formControl]="city" class="myInput" required placeholder="Stadt" type="text" name="city">
+              <mat-icon *ngIf="city.status == 'INVALID' && city.dirty">cancel</mat-icon>
+              <mat-icon *ngIf="city.status == 'VALID' ">check_circle</mat-icon>
+            </div>
+          </div>
+          <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+            <button mat-button color="primary" (click)="nextStep()">End</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      
+      </mat-accordion>
   
-        <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Geburtstag</mat-label>
-            <input [disabled]="loading" [(ngModel)]="birthDate" matInput placeholder="Placeholder" [matDatepicker]="picker1">
-            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-          </mat-form-field>
-        </div>
-    
-        <mat-action-row>
-          <button mat-button color="warn" (click)="prevStep()">Previous</button>
-          <button mat-button color="primary" (click)="nextStep()">Next</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-    
-      <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-          Deine Adresse
-          </mat-panel-title>
-            <mat-icon>map</mat-icon>
-        </mat-expansion-panel-header>
-    
-        <div class="order-info">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Street + House No</mat-label>
-            <input [disabled]="loading" [(ngModel)]="user.street" matInput placeholder="Placeholder">
-          </mat-form-field>
+     <div class="second-panel">
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="false" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+             Lieferzeit
+            </mat-panel-title>
+              <mat-icon>schedule</mat-icon>
+          </mat-expansion-panel-header>
+      
+          <mat-card>
+            <mat-card-content>Die Lieferzeit beträgt momentan 45-60 Minuten</mat-card-content>
+          </mat-card>
+        </mat-expansion-panel>
+      
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+            Zahlungsart
+            </mat-panel-title>
+              <mat-icon>credit_card_gear</mat-icon>
+          </mat-expansion-panel-header>
+          <mat-card>
+            <mat-card-content>Momentan ist nur Barzahlung möglich</mat-card-content>
+          </mat-card>
+        </mat-expansion-panel>
+      </mat-accordion>
   
-          <mat-form-field class="mr-16" appearance="outline">
-            <mat-label>Zip Code</mat-label>
-            <input [disabled]="loading" [(ngModel)]="user.zipCode" matInput placeholder="Placeholder">
-          </mat-form-field>
+
+      <div class="pay-btn">
+        <button>
+          Bestellen und Bezahlen mit (20,32€)
+        </button>
+      </div>
   
-          <mat-form-field  appearance="outline">
-            <mat-label>City</mat-label>
-            <input [disabled]="loading" [(ngModel)]="user.city" matInput placeholder="Placeholder">
-          </mat-form-field>
-        </div>
-        <mat-action-row>
-          <button mat-button color="warn" (click)="prevStep()">Previous</button>
-          <button mat-button color="primary" (click)="nextStep()">End</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-    
-    </mat-accordion>
-
-   <div class="second-panel">
-    <mat-accordion class="example-headers-align">
-      <mat-expansion-panel [expanded]="false" hideToggle>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-           Lieferzeit
-          </mat-panel-title>
-            <mat-icon>schedule</mat-icon>
-        </mat-expansion-panel-header>
-    
-        <mat-card>
-          <mat-card-content>Die Lieferzeit beträgt momentan 45-60 Minuten</mat-card-content>
-        </mat-card>
-      </mat-expansion-panel>
-    
-      <mat-expansion-panel hideToggle>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-          Zahlungsart
-          </mat-panel-title>
-            <mat-icon>credit_card_gear</mat-icon>
-        </mat-expansion-panel-header>
-        <mat-card>
-          <mat-card-content>Momentan ist nur Barzahlung möglich</mat-card-content>
-        </mat-card>
-      </mat-expansion-panel>
-    </mat-accordion>
-
-    <div class="pay-btn" (click)="onSubmit(nameForm)">
-      Bestellen und Bezahlen mit (20,32€)
-    </div>
-
-   </div>
+      </div>
+    </form>
+  
+      
     
 
     <!--<div class="user-data-container">
