@@ -71,7 +71,7 @@
             </span>
           </div>
 
-          <div routerLink="order" (click)="shoppingBasketService.orderMeals()" class="pay-btn">
+          <div *ngIf="shoppingBasketService.userAtShop" routerLink="order" (click)="shoppingBasketService.orderMeals()" class="pay-btn">
             Bezahlen ({{shoppingBasketService.endSum.toFixed(2)}}€)
           </div>
 

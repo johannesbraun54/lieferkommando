@@ -4,6 +4,11 @@
     padding-top: 32px;
 }
 
+.order-headline{
+    display: flex;
+    justify-content: space-between;
+}
+
 .user-data-container{
     box-sizing: border-box;
     width: 100%;
@@ -27,4 +32,51 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .mat-expansion-panel-header-description{
+    width: 50%;
+  }
+
+  
+  .mat-mdc-form-field {
+    margin-left: 16px;
+    flex-grow: 1;
+    &:first-child{
+      margin-left: 0px;
+    }
+  }
+
+  .order-info{
+    display: flex;
+    justify-content: center!important;
+    align-items: center!important;
+  }
+
+  .second-panel{
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+
+  .pay-btn{
+    width: 100%;
+    background-color: #c83068;
+    border-radius: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    font-size: 17px;
+    margin-top: 20px;
+    box-sizing: border-box;
+    &:hover{
+        background-color: #be2e63;
+        cursor: pointer;
+    }
 }
