@@ -10,7 +10,7 @@ export class User{
     zipCode: number;
     city: string;
     customUserId: string;
-    purchases = new Purchase;
+    purchases: Purchase[] = [];
 
 
 
@@ -24,7 +24,10 @@ export class User{
         this.zipCode = obj ? obj.zipCode : '';
         this.city = obj ? obj.city : '';
         this.customUserId = obj ? obj.customUserId : '';
-        this.purchases = obj? obj.purchases : [];
+        if (obj) {
+            this.purchases.push(obj.purchases);
+          }
+        //console.log('purchases from user modell',this.purchases)
 }
 
 public toJson(){

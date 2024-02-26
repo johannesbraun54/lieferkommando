@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Meal } from '../models/meal.class';
 import { Purchase } from '../models/purchase.class';
+import { Firestore, collection, doc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ emptyMeal = true;
 userAtShop = true;
 subTotal!:number;
 endSum!:number;
-
+firestore: Firestore = inject(Firestore)
   constructor() {
 
    }
@@ -23,7 +24,6 @@ endSum!:number;
     this.purchase.amounts = this.amounts;
     this.purchase.products = this.localShoppingBasket;
     this.purchase.prices = this.prices;
-    console.log(this.purchase);
   }
 
 
@@ -74,6 +74,10 @@ endSum!:number;
 
   orderMeals(){
     this.userAtShop = false;
+  }
+
+  getSingleDocRef( docId:string){
+    return doc(collection(this.firestore, 'users'), docId);
   }
 
 }

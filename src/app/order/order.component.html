@@ -5,7 +5,7 @@
       <h1>Braun's Burger Bude</h1>
     </span>
      
-    <form (submit)="getOrder()" ngNativeValidate>
+    <form  ngNativeValidate>
       <mat-accordion class="example-headers-align">
         <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
           <mat-expansion-panel-header>
@@ -18,7 +18,8 @@
           <div  class="order-info">
   
             <div class="inputConti">
-              <input [(ngModel)]="user.firstName" [formControl]="firstName" class="myInput" required placeholder="Your first name" type="text" name="firstName">
+              <input [(ngModel)]="user.firstName" [formControl]="firstName" class="myInput" 
+                required placeholder="Your first name" type="text" name="firstName">
               <mat-icon *ngIf="firstName.status == 'INVALID' && firstName.dirty">cancel</mat-icon>
               <mat-icon *ngIf="firstName.status == 'VALID' ">check_circle</mat-icon>
 
@@ -143,7 +144,7 @@
   
 
       <div class="pay-btn">
-        <button>
+        <button (click)="getOrder()">
           Bestellen und Bezahlen mit (20,32€)
         </button>
       </div>
