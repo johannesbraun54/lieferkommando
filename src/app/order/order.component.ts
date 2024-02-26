@@ -140,10 +140,14 @@ async pushOrderToKnownUser(){
   let docRef = this.shoppingBasketService.getSingleDocRef(this.currentCustomerId);
   this.getNewPurchaseJson();
   this.currentCustomer.purchases = this.currentPurchases;
-  this.user = this.currentCustomer;
+  this.user.purchases = [];
+  this.currentCustomer.purchases.forEach((purchase: Purchase) => {
+    this.user.purchases.push(purchase);
+  })
+ 
   console.log('currentCustomer', this.currentCustomer);
-  console.log('user', this.user);
-  //await updateDoc(docRef, this.user.toJson());
+  console.log('user', this.user.purchases);
+  await updateDoc(docRef, this.user.toJson());
 }
 
 getNewPurchaseJson(){
