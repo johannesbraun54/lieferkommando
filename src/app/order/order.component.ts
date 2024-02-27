@@ -62,6 +62,7 @@ unsubUserList:any;
 currentPurchases:any[] = [];
 
 constructor(public shoppingBasketService : ShoppingBasketService){
+  this.shoppingBasketService.loadDataFromLocalStorage();
   this.unsubUserList = onSnapshot(this.getUserDataRef(),(userList) => {
     this.userCollection = [];
     userList.forEach((user) => {

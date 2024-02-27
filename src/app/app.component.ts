@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { RouterModule } from '@angular/router';
@@ -24,27 +24,30 @@ import { Meal } from './models/meal.class';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'lieferkommando';
   localShoppingBasket!: Meal[];
   amounts!: number[];
   prices!: number[];
 
-  constructor(public shoppingBasketService: ShoppingBasketService){
-    this.localShoppingBasket = this.shoppingBasketService.localShoppingBasket;
-    this.amounts = this.shoppingBasketService.amounts;
-    this.prices = this.shoppingBasketService.prices;
+  constructor(public shoppingBasketService: ShoppingBasketService) {
+    this.shoppingBasketService.loadDataFromLocalStorage();
+
+  }
+  async ngOnInit() {
+     this.shoppingBasketService.loadDataFromLocalStorage();
+
   }
 
-  reduceMeal(meal:Meal){
+  reduceMeal(meal: Meal) {
     this.shoppingBasketService.reduceMeal(meal);
   }
 
-  addMeal(meal:Meal){
+  addMeal(meal: Meal) {
     this.shoppingBasketService.addMeal(meal)
   }
 
-  sumOfPrices(){
+  sumOfPrices() {
     this.shoppingBasketService.sumOfPrices();
   }
 }

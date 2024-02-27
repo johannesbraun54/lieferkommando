@@ -19,15 +19,15 @@
         <div class="outer-card-container" *ngIf="!shoppingBasketService.emptyMeal">
           <h1 class="cart-headline">Warenkorb</h1>
 
-          <div class="full-shopping-cart-container" *ngFor="let meal of localShoppingBasket; let i = index">
+          <div class="full-shopping-cart-container" *ngFor="let meal of shoppingBasketService.localShoppingBasket; let i = index">
 
             <div class="card-meal-info">
               <span class="mealname-in-cart">
-                <span>{{amounts[i]}}</span>
+                <span>{{shoppingBasketService.amounts[i]}}</span>
                 <span>{{meal.mealName}}</span>
               </span>
               <span>
-                {{prices[i].toFixed(2)}}€
+                {{shoppingBasketService.prices[i].toFixed(2)}}€
               </span> 
             </div>
 
@@ -37,7 +37,7 @@
               </div>
               <div class="edit-amount">
                 <div (click)="reduceMeal(meal)" class="edit-amount-btn"><mat-icon>remove</mat-icon></div>
-                <span>{{amounts[i]}}</span>
+                <span>{{shoppingBasketService.amounts[i]}}</span>
                 <div (click)="addMeal(meal)" class="edit-amount-btn"><mat-icon>add</mat-icon></div>
               </div>
             </div>
@@ -49,9 +49,10 @@
               <span>
                 Zwischensumme
               </span>
-              <span>
+              <span *ngIf="shoppingBasketService.subTotal !== undefined">
                 {{shoppingBasketService.subTotal.toFixed(2)}}
               </span>
+              
             </span>
             <span class="pay-area">
               <span>
@@ -72,7 +73,7 @@
           </div>
 
           <div *ngIf="shoppingBasketService.userAtShop" routerLink="order" (click)="shoppingBasketService.orderMeals()" class="pay-btn">
-            Bezahlen ({{shoppingBasketService.endSum.toFixed(2)}}€)
+              Bezahlen ({{shoppingBasketService.endSum.toFixed(2)}}€)
           </div>
 
         </div>
