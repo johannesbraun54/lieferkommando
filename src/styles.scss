@@ -20,3 +20,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 ::-webkit-scrollbar-thumb:hover {
     background-color: #ff5f92; /* Farbe des Scrollbalken-Griffs im Hover-Zustand */
 }
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #303030 inset !important; /* Hintergrundfarbe ändern */
+    -webkit-text-fill-color: white !important; /* Schriftfarbe ändern */
+    caret-color: white !important; /* Cursorfarbe ändern */
+}
+
+

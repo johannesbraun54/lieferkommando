@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
   localShoppingBasket!: Meal[];
   amounts!: number[];
   prices!: number[];
+  open = false;
 
   constructor(public shoppingBasketService: ShoppingBasketService) {
     this.shoppingBasketService.loadDataFromLocalStorage();
@@ -37,6 +38,10 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
      this.shoppingBasketService.loadDataFromLocalStorage();
 
+  }
+
+  toggleDrawer(){
+    this.open = !this.open;
   }
 
   reduceMeal(meal: Meal) {

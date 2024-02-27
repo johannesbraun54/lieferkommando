@@ -18,7 +18,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Purchase } from '../models/purchase.class';
-
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -36,7 +36,8 @@ import { Purchase } from '../models/purchase.class';
     MatIconModule,
     MatExpansionModule,
     MatCardModule,
-    ReactiveFormsModule],
+    ReactiveFormsModule,
+    RouterModule],
   templateUrl: './order.component.html',
   styleUrl: './order.component.scss'
 })
@@ -73,9 +74,9 @@ constructor(public shoppingBasketService : ShoppingBasketService){
       this.userCollection.push(userdata);
     })
   });
-
+  this.shoppingBasketService.userAtShop = false;
   this.shoppingBasketService.getPurchase();
-  this.shoppingBasketService.purchase.toJson 
+  this.shoppingBasketService.purchase.toJson; 
 
 
 }
@@ -122,10 +123,8 @@ getOrder(){
   this.loading = true;
   this.user.birthDate = this.birthDate.getTime();
   if (this.currentCustomerId) {
-    console.log('old user');
     this.pushOrderToKnownUser()
   } else {
-    console.log('new user');
     addDoc(this.getUserDataRef(), this.user.toJson())
     .catch((err) => {
       console.error(err)
@@ -145,9 +144,6 @@ async pushOrderToKnownUser(){
   this.currentCustomer.purchases.forEach((purchase: Purchase) => {
     this.user.purchases.push(purchase);
   })
- 
-  console.log('currentCustomer', this.currentCustomer);
-  console.log('user', this.user.purchases);
   await updateDoc(docRef, this.user.toJson());
 }
 
