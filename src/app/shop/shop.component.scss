@@ -95,15 +95,7 @@
 }
 
 @media(max-width: 768px){
-    .product-container{
-        padding-left: 16px;
-        padding-right: 16px;
-    }
 
-    .shop-header{
-        padding-left: 16px;
-        padding-right: 16px;
-    }
 }
 
 @media(min-width: 1500px){
@@ -117,6 +109,16 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .product-container{
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .shop-header{
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
     .product-container{

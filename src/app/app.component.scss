@@ -160,6 +160,7 @@ mat-toolbar, mat-toolbar-row{
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    flex-grow: 1;
     span{
         &:hover{
             cursor: pointer;
@@ -179,7 +180,8 @@ mat-toolbar, mat-toolbar-row{
     width: 50%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; 
+    max-width: 150px;
 }
 
 .edit-amount-btn{
@@ -194,6 +196,37 @@ mat-toolbar, mat-toolbar-row{
         background-color: #292929;
     }
 }
+
+
+.textarea-container{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    width: 100%;
+    textarea{
+        border-radius: 8px;
+        background-color: #424242;
+        flex-grow: 1;
+        caret-color: white;
+        outline-style: none; 
+        color: white;
+        margin-bottom: 12px;
+        &:focus{
+            outline-style: solid;
+            outline-color: #941a16;
+        }
+        &:hover{
+            background-color: #383838;
+        }
+    }
+}
+
+.edit-remark{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 
 .pay-area-container{
     width: 100%;
@@ -237,7 +270,9 @@ mat-toolbar, mat-toolbar-row{
 
 @media(max-width: 940px){
     .responsive-menu-icon{
-        display: block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         >span{
             color: #303030;
             background-color: white;
@@ -246,8 +281,12 @@ mat-toolbar, mat-toolbar-row{
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 32px;
-            font-size: 16px;
+            width: 16px;
+            height: 16px;
+            font-size: 15px;
+            margin-right: -31px;
+            margin-bottom: 16px;
+            padding: 3px;
         }
     }
 

@@ -18,9 +18,16 @@ export class ShoppingBasketService {
   subTotal!: number;
   endSum!: number;
   firestore: Firestore = inject(Firestore);
-  localStorage:any;
-  constructor(@Inject(DOCUMENT) public document: Document) { 
-   this.localStorage = this.document.defaultView?.localStorage;
+  localStorage: any;
+  sumOfProducts: number = 0;
+  showTextarea = false;
+
+  constructor(@Inject(DOCUMENT) public document: Document) {
+    this.localStorage = this.document.defaultView?.localStorage;
+  }
+
+  toggleTextarea(){
+    this.showTextarea = !this.showTextarea;
   }
 
   getPurchase() {
@@ -38,12 +45,14 @@ export class ShoppingBasketService {
       console.log(this.prices[index]);
       this.prices[index] = this.prices[index] + meal.price
       this.sumOfPrices();
+      this.getSumOfProducts()
       this.saveDataInLocalStorage();
     } else {
       this.prices.push(meal.price);
       this.amounts.push(1);
       this.localShoppingBasket.push(meal);
       this.sumOfPrices();
+      this.getSumOfProducts()
       this.saveDataInLocalStorage();
     }
   }
@@ -56,6 +65,7 @@ export class ShoppingBasketService {
       this.amounts[index]--;
       this.prices[index] -= meal.price;
       this.sumOfPrices();
+      this.getSumOfProducts()
       this.saveDataInLocalStorage();
     }
   }
@@ -66,18 +76,17 @@ export class ShoppingBasketService {
     this.sumOfPrices();
     this.localShoppingBasket.splice(index, 1);
     this.localShoppingBasket.length < 1 ? this.emptyMeal = true : this.emptyMeal = false;
+    this.getSumOfProducts()
     this.saveDataInLocalStorage();
   }
 
-  /*sumOfPrices() {
-    let sum = 0;
-    for (let i = 0; i < this.prices.length; i++) {
-      let price = this.prices[i];
-      this.subTotal = sum += price
-      this.endSum = this.subTotal + 1.99
-      this.purchase.totalAmount = this.endSum;
+  getSumOfProducts() {
+    this.sumOfProducts = 0;
+    for (let i = 0; i < this.amounts.length; i++) {
+      const amount = this.amounts[i];
+      this.sumOfProducts += amount
     }
-  }*/
+  }
 
   sumOfPrices() {
     let sum = 0;
@@ -89,7 +98,7 @@ export class ShoppingBasketService {
     this.endSum = this.subTotal + 1.99;
     this.purchase.totalAmount = this.endSum;
   }
-  
+
 
   orderMeals() {
     this.userAtShop = false;
@@ -118,7 +127,7 @@ export class ShoppingBasketService {
         this.localShoppingBasket = JSON.parse(localShoppingBasketStr);
         this.prices = JSON.parse(priceStr);
         this.amounts = JSON.parse(amountsStr);
-        this.localShoppingBasket.length > 0 ? this.emptyMeal = false : this.emptyMeal = true; 
+        this.localShoppingBasket.length > 0 ? this.emptyMeal = false : this.emptyMeal = true;
         this.sumOfPrices();
       }
     }

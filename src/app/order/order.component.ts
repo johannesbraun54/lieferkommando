@@ -119,7 +119,7 @@ getOrder(){
   this.user.birthDate = this.birthDate.getTime();
   if (this.currentCustomerId) {
     this.pushOrderToKnownUser();
-    this.shoppingBasketService.orderCompleted = true;
+    //this.shoppingBasketService.orderCompleted = true;
   } else {
     addDoc(this.getUserDataRef(), this.user.toJson())
     .catch((err) => {

@@ -36,8 +36,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   private orderCompletedSubscription!: Subscription;
 
 
-  constructor(public shoppingBasketService: ShoppingBasketService, private renderer : Renderer2) {
+  constructor(public shoppingBasketService: ShoppingBasketService, private renderer: Renderer2) {
     this.shoppingBasketService.loadDataFromLocalStorage();
+    this.shoppingBasketService.getSumOfProducts();
   }
 
 
@@ -51,10 +52,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  checkAndCloseDrawer(){
+  checkAndCloseDrawer() {
     if ((window.innerWidth < 940 && this.drawer.opened)) {
       this.drawer.close();
-    } else if(window.innerWidth >= 940 && !this.drawer.opened){
+    } else if (window.innerWidth >= 940 && !this.drawer.opened) {
       this.drawer.open();
     }
   }
@@ -66,7 +67,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async ngOnInit() {
-     this.shoppingBasketService.loadDataFromLocalStorage();
+    this.shoppingBasketService.loadDataFromLocalStorage();
 
   }
 

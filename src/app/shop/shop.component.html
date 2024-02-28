@@ -34,12 +34,11 @@
         <span>{{meal.description}}</span>
        {{meal.price}}€
     </div>
-
 </div>
 
 <div class="responsive-btn-container">
-    <div *ngIf="shoppingBasketService.userAtShop" routerLink="order" (click)="shoppingBasketService.orderMeals()" class="responsive-pay-btn">
-        Bezahlen ({{shoppingBasketService.endSum}}€)
+    <div *ngIf="shoppingBasketService.userAtShop && shoppingBasketService.endSum" routerLink="order" (click)="shoppingBasketService.orderMeals()" class="responsive-pay-btn">
+        Bezahlen ({{shoppingBasketService.endSum.toFixed(2)}}€)
     </div>
 </div>
 
