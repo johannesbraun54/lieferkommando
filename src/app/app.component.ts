@@ -11,6 +11,7 @@ import { ShoppingBasketService } from './service/shopping-basket.service';
 import { Meal } from './models/meal.class';
 import { Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ import { Subscription } from 'rxjs';
     MatIconModule,
     RouterModule,
     MatDatepickerModule,
-    MatNativeDateModule],
+    MatNativeDateModule,
+    FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -50,6 +52,13 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.resizeListener = this.renderer.listen('window', 'resize', () => {
       this.checkAndCloseDrawer();
     });
+
+    if (this.shoppingBasketService.textareas) {
+      this.shoppingBasketService.textareas.forEach((textarea, index) => {
+        console.log(`Textarea ${index + 1}:`, textarea.nativeElement);
+        // Weitere Logik hier...
+      });
+    }
   }
 
   checkAndCloseDrawer() {

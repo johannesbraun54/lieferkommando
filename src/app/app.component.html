@@ -35,7 +35,7 @@
                 </span> 
               </div>
   
-              <div (click)="shoppingBasketService.toggleTextarea()" *ngIf="shoppingBasketService.userAtShop" class="edit-meal-in-cart">
+              <div (click)="shoppingBasketService.toggleTextField(i)" *ngIf="shoppingBasketService.userAtShop" class="edit-meal-in-cart">
                 <div class="add-remark">
                   <span>Anmerkung<br>hinzufügen</span>
                 </div>
@@ -45,13 +45,13 @@
                   <div (click)="addMeal(meal)" class="edit-amount-btn"><mat-icon>add</mat-icon></div>
                 </div>
               </div>
-              <div *ngIf="shoppingBasketService.showTextarea" class="textarea-container">
-                <textarea name="" id="" rows="6" maxlength="160"></textarea>
-                <span class="edit-remark">
-                  <span>Abbrechen</span>
-                  <span>Hinzufügen</span>
-                </span>
-              </div>
+              <div *ngIf="shoppingBasketService.localShoppingBasket[i].showTextField" class="textarea-container">
+                <textarea  name="" id="{{ meal.textareaId }}" rows="6" #textareas [(ngModel)]="shoppingBasketService.textValues[i]"  maxlength="160"></textarea>
+              </div><!--(change)="shoppingBasketService.addTextValue($event?.target?.value, i)"-->
+              <span *ngIf="shoppingBasketService.localShoppingBasket[i].showTextField" class="edit-remark">
+                <span (click)="shoppingBasketService.toggleTextField(i)">Abbrechen</span>
+                <span>Hinzufügen</span>
+              </span>
             </div>
 
           </div>

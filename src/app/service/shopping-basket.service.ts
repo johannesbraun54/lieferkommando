@@ -1,4 +1,4 @@
-import { Inject, Injectable, inject } from '@angular/core';
+import { ElementRef, Inject, Injectable, QueryList, ViewChildren, inject, viewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Meal } from '../models/meal.class';
 import { Purchase } from '../models/purchase.class';
@@ -20,14 +20,21 @@ export class ShoppingBasketService {
   firestore: Firestore = inject(Firestore);
   localStorage: any;
   sumOfProducts: number = 0;
-  showTextarea = false;
+  @ViewChildren('textareas') textareas!: QueryList<ElementRef>;
+  textValues: string[] = []; // Array zur Speicherung der Textfeldwerte
+
 
   constructor(@Inject(DOCUMENT) public document: Document) {
     this.localStorage = this.document.defaultView?.localStorage;
   }
 
-  toggleTextarea(){
-    this.showTextarea = !this.showTextarea;
+  toggleTextField(index: number): void {
+    this.localShoppingBasket[index].showTextField = !this.localShoppingBasket[index].showTextField;
+  }
+
+  addTextValue(value: string, index: number): void {
+    //const target = event.target as HTMLInputElement; // Typumwandlung, um TypeScript mitzuteilen, dass es sich um ein HTMLInputElement handelt
+    this.textValues[index] = value;
   }
 
   getPurchase() {
@@ -48,12 +55,15 @@ export class ShoppingBasketService {
       this.getSumOfProducts()
       this.saveDataInLocalStorage();
     } else {
+      const textareaId = `textarea-${this.localShoppingBasket.length + 1}`;
+      meal.textareaId = textareaId;
       this.prices.push(meal.price);
       this.amounts.push(1);
       this.localShoppingBasket.push(meal);
       this.sumOfPrices();
       this.getSumOfProducts()
       this.saveDataInLocalStorage();
+      console.log(textareaId)
     }
   }
 
