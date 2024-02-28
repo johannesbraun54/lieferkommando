@@ -1,0 +1,45 @@
+<img class="atf-image" src="../../assets/burgerBackground.jpeg">
+<div class="shop-header">
+    <h1>Braun's Burger Bude</h1>
+    <div class="shop-rating">
+        <mat-icon>star</mat-icon>
+        <mat-icon>star</mat-icon>
+        <mat-icon>star</mat-icon>
+        <mat-icon>star</mat-icon>
+        <mat-icon>star_half</mat-icon>
+        178 Bewertungen
+    </div>
+    <div class="buy-info">
+        <span>
+            <mat-icon>shopping_bag</mat-icon>
+            Min. 7,90€
+        </span>
+        <span>
+            <mat-icon>pedal_bike</mat-icon>
+            1,99€
+        </span>
+    </div>
+</div>
+
+<div class="product-container">
+    <h1>Hausgemachte Burger</h1>
+
+    <div class="product" *ngFor="let meal of allMeals; let i = index">
+        <div class="product-header">
+                {{meal.mealName}}
+            <button (click)="addToBasket(meal)" mat-mini-fab color="primary">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>        
+        <span>{{meal.description}}</span>
+       {{meal.price}}€
+    </div>
+
+</div>
+
+<div class="responsive-btn-container">
+    <div *ngIf="shoppingBasketService.userAtShop" routerLink="order" (click)="shoppingBasketService.orderMeals()" class="responsive-pay-btn">
+        Bezahlen ({{shoppingBasketService.endSum}}€)
+    </div>
+</div>
+
