@@ -53,12 +53,14 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       this.checkAndCloseDrawer();
     });
 
-    if (this.shoppingBasketService.textareas) {
+    /*if (this.shoppingBasketService.textareas) {
       this.shoppingBasketService.textareas.forEach((textarea, index) => {
         console.log(`Textarea ${index + 1}:`, textarea.nativeElement);
-        // Weitere Logik hier...
+      sumOfPrices() {
+      this.shoppingBasketService.sumOfPrices();
+      }
       });
-    }
+    }*/
   }
 
   checkAndCloseDrawer() {
@@ -88,7 +90,5 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.shoppingBasketService.addMeal(meal)
   }
 
-  sumOfPrices() {
-    this.shoppingBasketService.sumOfPrices();
-  }
+
 }

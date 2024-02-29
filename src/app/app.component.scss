@@ -119,7 +119,7 @@ mat-toolbar, mat-toolbar-row{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     width: 100%;
     gap: 10px;
 }
@@ -129,6 +129,15 @@ mat-toolbar, mat-toolbar-row{
     justify-content: flex-start;
     align-items: flex-start;
     width: 24px;    
+}
+
+.remark-container{
+    background-color: #303030;
+    padding: 8px;
+    border-radius: 8px;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .meal-in-basket{
@@ -203,6 +212,8 @@ mat-toolbar, mat-toolbar-row{
     flex-direction: column;
     width: 100%;
     textarea{
+        font-family: Roboto, "Helvetica Neue", sans-serif; 
+        padding: 8px;
         border-radius: 8px;
         background-color: #424242;
         flex-grow: 1;
@@ -231,6 +242,7 @@ mat-toolbar, mat-toolbar-row{
         }
     }
 }
+
 
 
 .pay-area-container{

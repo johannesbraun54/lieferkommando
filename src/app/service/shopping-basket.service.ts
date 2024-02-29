@@ -21,7 +21,7 @@ export class ShoppingBasketService {
   localStorage: any;
   sumOfProducts: number = 0;
   @ViewChildren('textareas') textareas!: QueryList<ElementRef>;
-  textValues: string[] = []; // Array zur Speicherung der Textfeldwerte
+  textValues: string[] = [];
 
 
   constructor(@Inject(DOCUMENT) public document: Document) {
@@ -30,11 +30,24 @@ export class ShoppingBasketService {
 
   toggleTextField(index: number): void {
     this.localShoppingBasket[index].showTextField = !this.localShoppingBasket[index].showTextField;
+    this.textValues[index] = '';
   }
 
-  addTextValue(value: string, index: number): void {
-    //const target = event.target as HTMLInputElement; // Typumwandlung, um TypeScript mitzuteilen, dass es sich um ein HTMLInputElement handelt
-    this.textValues[index] = value;
+  toggleEditTextField(index: number): void {
+    this.localShoppingBasket[index].showTextField = !this.localShoppingBasket[index].showTextField;
+  }
+
+  addRemarkToMeal(meal: Meal, i: number) {
+    meal.remark = this.textValues[i];
+    this.toggleEditTextField(i);
+    this.saveDataInLocalStorage();
+  }
+
+  deleteRemark(meal: Meal, i: number) {
+    meal.remark = '';
+    this.textValues[i] = '';
+    this.toggleTextField(i);
+    this.saveDataInLocalStorage();
   }
 
   getPurchase() {
@@ -55,15 +68,12 @@ export class ShoppingBasketService {
       this.getSumOfProducts()
       this.saveDataInLocalStorage();
     } else {
-      const textareaId = `textarea-${this.localShoppingBasket.length + 1}`;
-      meal.textareaId = textareaId;
       this.prices.push(meal.price);
       this.amounts.push(1);
       this.localShoppingBasket.push(meal);
       this.sumOfPrices();
       this.getSumOfProducts()
       this.saveDataInLocalStorage();
-      console.log(textareaId)
     }
   }
 
