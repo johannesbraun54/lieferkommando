@@ -135,10 +135,10 @@ mat-toolbar-row {
     align-items: center;
     padding-left: 16px;
     padding-right: 16px;
+    margin-top: 56px;
 
     :nth-last-child(2) {
         border-bottom-style: none;
-        /* Setze border-bottom-style für das letzte Kind auf "none" */
     }
 
 }
