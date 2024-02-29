@@ -12,6 +12,7 @@ import { Meal } from './models/meal.class';
 import { Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { FooterComponent } from './footer/footer.component';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +25,8 @@ import { FormsModule } from '@angular/forms';
     RouterModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    FormsModule],
+    FormsModule,
+    FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -41,8 +43,15 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(public shoppingBasketService: ShoppingBasketService, private renderer: Renderer2) {
     this.shoppingBasketService.loadDataFromLocalStorage();
     this.shoppingBasketService.getSumOfProducts();
+    this.goToImprint
+
   }
 
+  goToImprint(){
+    if(this.shoppingBasketService.userAtImprint){
+      this.drawer.close();
+    }
+  }
 
   closeDrawer() {
     this.drawer.close();

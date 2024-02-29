@@ -22,6 +22,7 @@ export class ShoppingBasketService {
   sumOfProducts: number = 0;
   @ViewChildren('textareas') textareas!: QueryList<ElementRef>;
   textValues: string[] = [];
+  userAtImprint = false;
 
 
   constructor(@Inject(DOCUMENT) public document: Document) {

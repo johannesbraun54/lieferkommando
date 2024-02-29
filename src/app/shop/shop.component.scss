@@ -70,7 +70,7 @@
 
 .responsive-btn-container{
     display: none;
-    position: fixed;
+    position: sticky;
     bottom: 0px;
     background-color: #343434;
     height: 80px;
@@ -78,7 +78,7 @@
 }
 
 .responsive-pay-btn{
-    width: 95%;
+    width: 97%;
     background-color: #941a16;
     border-radius: 32px;
     display: flex;
