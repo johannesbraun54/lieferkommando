@@ -126,7 +126,6 @@ export class OrderComponent {
     this.user.birthDate = this.birthDate.getTime();
     if (this.currentCustomerId) {
       this.pushOrderToKnownUser();
-      //this.shoppingBasketService.orderCompleted = true;
     } else {
       addDoc(this.getUserDataRef(), this.user.toJson())
         .catch((err) => {
@@ -134,8 +133,8 @@ export class OrderComponent {
         })
         .then((result: any) => {
           this.loading = false;
-          console.log('added user', this.user);
           this.shoppingBasketService.orderCompleted = true;
+          this.orderIsCompleted.emit();
         })
     }
   }
@@ -148,7 +147,9 @@ export class OrderComponent {
     this.currentCustomer.purchases.forEach((purchase: Purchase) => {
       this.user.purchases.push(purchase);
     })
-    await updateDoc(docRef, this.user.toJson());
+    await updateDoc(docRef, this.user.toJson()).then(() => {
+      this.orderIsCompleted.emit();
+    })
   }
 
   getNewPurchaseJson() {
@@ -175,7 +176,6 @@ export class OrderComponent {
       this.currentCustomer = foundUser;
       this.currentCustomerId = foundUser.customUserId;
       this.currentCustomer.purchases.push(this.shoppingBasketService.purchase);
-      console.log('currentCustomer', this.currentCustomer.purchases);
     }
 
 
