@@ -108,7 +108,7 @@
           <mat-toolbar-row>
               <span class="headline" routerLink="/">Lieferkommando</span>
               <span *ngIf="!shoppingBasketService.orderCompleted" class="responsive-menu-icon" (click)="drawer.toggle()">
-                <span *ngIf="shoppingBasketService.sumOfProducts > 0">{{shoppingBasketService.sumOfProducts}}</span>
+                <span *ngIf="shoppingBasketService.sumOfProducts > 0">{{shoppingBasketService.getSumOfProducts()}}</span>
                 <mat-icon *ngIf="!shoppingBasketService.orderCompleted">shopping_cart</mat-icon>
               </span>
           </mat-toolbar-row>

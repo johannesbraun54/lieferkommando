@@ -135,6 +135,8 @@ export class OrderComponent {
           this.loading = false;
           this.shoppingBasketService.orderCompleted = true;
           this.orderIsCompleted.emit();
+          this.shoppingBasketService.amounts = [];
+          this.shoppingBasketService.sumOfProducts = 0;
         })
     }
   }

@@ -107,6 +107,8 @@ export class ShoppingBasketService {
       const amount = this.amounts[i];
       this.sumOfProducts += amount
     }
+
+    return this.sumOfProducts
   }
 
   sumOfPrices() {
