@@ -1,20 +1,21 @@
-import { Purchase } from "./purchase.class";
-import { Meal } from "./meal.class";
 
-export class User{
+
+export class User {
     firstName: string;
     lastName: string;
-    email: string; 
+    email: string;
     birthDate: number;
     street: string;
     zipCode: number;
     city: string;
     customUserId: string;
-    purchases: Purchase[] = [];
+    purchases: any = [];
+    totalRevenue: number;
+    totalPurchasesAmount: number;
 
 
 
-    constructor(obj?:any){
+    constructor(obj?: any) {
 
         this.firstName = obj ? obj.firstName : '';
         this.lastName = obj ? obj.lastName : '';
@@ -26,22 +27,24 @@ export class User{
         this.customUserId = obj ? obj.customUserId : '';
         if (obj) {
             this.purchases.push(obj.purchases);
-          }
-        //console.log('purchases from user modell',this.purchases)
-}
-
-public toJson(){
-    return {
-        firstName : this.firstName,
-        lastName : this.lastName,
-        email : this.email,
-        birthDate : this.birthDate,
-        street : this.street,
-        zipCode : this.zipCode,
-        city : this.city,
-        customUserId : this.customUserId,
-        purchases : this.purchases
+        }
+        this.totalRevenue = obj? obj.totalRevenue : 0;
+        this.totalPurchasesAmount = obj? obj.totalPurchasesAmount : 0;
     }
-}
+
+    public toJson() {
+        return {
+            firstName: this.firstName,
+            lastName: this.lastName,
+            email: this.email,
+            birthDate: this.birthDate,
+            street: this.street,
+            zipCode: this.zipCode,
+            city: this.city,
+            customUserId: this.customUserId,
+            purchases: this.purchases,
+            totalRevenue: this.totalRevenue,
+        }
+    }
 }
 
