@@ -63,7 +63,6 @@ export class ShoppingBasketService {
     let index = this.localShoppingBasket.indexOf(meal);
     if (index != -1) {
       this.amounts[index]++;
-      console.log(this.prices[index]);
       this.prices[index] = this.prices[index] + meal.price
       this.sumOfPrices();
       this.getSumOfProducts()

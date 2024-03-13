@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -40,15 +40,14 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   private orderCompletedSubscription!: Subscription;
 
 
-  constructor(public shoppingBasketService: ShoppingBasketService, private renderer: Renderer2) {
+  constructor(public shoppingBasketService: ShoppingBasketService, private renderer: Renderer2, private router: Router) {
     this.shoppingBasketService.loadDataFromLocalStorage();
     this.shoppingBasketService.getSumOfProducts();
-    this.goToImprint
-
+    this.goToImprint();
   }
 
-  goToImprint(){
-    if(this.shoppingBasketService.userAtImprint){
+  goToImprint() {
+    if (this.shoppingBasketService.userAtImprint) {
       this.drawer.close();
     }
   }
@@ -57,19 +56,22 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.drawer.close();
   }
 
+  checkCurrentUrl() {
+    if(this.drawer){
+      const currentUrl = this.router.url;
+      if (currentUrl === '/order') {
+          this.drawer.close();
+      }else {
+        this.drawer.opened = true;
+      }
+    }
+  }
+
+
   ngAfterViewInit(): void {
     this.resizeListener = this.renderer.listen('window', 'resize', () => {
       this.checkAndCloseDrawer();
     });
-
-    /*if (this.shoppingBasketService.textareas) {
-      this.shoppingBasketService.textareas.forEach((textarea, index) => {
-        console.log(`Textarea ${index + 1}:`, textarea.nativeElement);
-      sumOfPrices() {
-      this.shoppingBasketService.sumOfPrices();
-      }
-      });
-    }*/
   }
 
   checkAndCloseDrawer() {
@@ -88,7 +90,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async ngOnInit() {
     this.shoppingBasketService.loadDataFromLocalStorage();
-
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.checkCurrentUrl();
+      }
+    });
   }
 
   reduceMeal(meal: Meal) {

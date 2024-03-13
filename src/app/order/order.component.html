@@ -106,7 +106,7 @@
       <div class="pay-btn" *ngIf="shoppingBasketService.endSum">
         <button (click)="getOrder()" routerLink="/orderCompleted" [disabled]="!firstName.valid || !lastName.valid || !emailInput.valid || !street.valid 
         || !zipCode.valid || !city.valid" #sendButton>
-          Bestellen und Bezahlen mit ({{shoppingBasketService.endSum.toFixed(2)}} €)
+          Bestellen und Bezahlen mit ({{shoppingBasketService.endSum.toFixed(2).replace(".",",")}} €)
         </button>
       </div>
   

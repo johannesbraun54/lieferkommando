@@ -10,10 +10,9 @@
         178 Bewertungen
     </div>
     <div class="buy-info">
-        <span>
+        <!-- <span>
             <mat-icon>shopping_bag</mat-icon>
-            Min. 7,90€
-        </span>
+        </span>-->
         <span>
             <mat-icon>pedal_bike</mat-icon>
             1,99€
@@ -26,19 +25,19 @@
 
     <div class="product" *ngFor="let meal of allMeals; let i = index">
         <div class="product-header">
-                {{meal.mealName}}
+            {{meal.mealName}}
             <button (click)="addToBasket(meal)" mat-mini-fab color="primary">
                 <mat-icon>add</mat-icon>
             </button>
-        </div>        
+        </div>
         <span>{{meal.description}}</span>
-       {{meal.price}}€
+        {{meal.price.toFixed(2).replace(".",",")}}€
     </div>
 </div>
 
 <div *ngIf="shoppingBasketService.sumOfProducts != 0 " class="responsive-btn-container">
-    <div *ngIf="shoppingBasketService.userAtShop && shoppingBasketService.endSum" routerLink="order" (click)="shoppingBasketService.orderMeals()" class="responsive-pay-btn">
+    <div *ngIf="shoppingBasketService.userAtShop && shoppingBasketService.endSum" routerLink="order"
+        (click)="shoppingBasketService.orderMeals()" class="responsive-pay-btn">
         Bezahlen ({{shoppingBasketService.endSum.toFixed(2)}}€)
     </div>
 </div>
-
