@@ -1,0 +1,119 @@
+    <div class="order-container">
+
+    <span class="order-headline">
+      <h1>Kasse</h1>
+      <h1 id="shopname" >Braun's Burger Bude</h1>
+    </span>
+     
+    <form ngNativeValidate>
+  
+          <div class="order-info">
+  
+            <div class="input-conti">
+              <div class="input-with-span">
+                <input [(ngModel)]="user.firstName" [formControl]="firstName" class="my-input" 
+                required placeholder="Your first name" type="text" name="firstName">
+                <span *ngIf="firstName.status == 'INVALID' && firstName.dirty" class="inputInvalidMessage">
+                  Dies ist ein Pflichtfeld
+                </span>
+              </div>
+              <div class="input-with-span">
+                <input [(ngModel)]="user.lastName" [formControl]="lastName" class="my-input" required placeholder="Your last name" type="text" name="lastName">
+                <span *ngIf="lastName.status == 'INVALID' && lastName.dirty">
+                  Dies ist ein Pflichtfeld
+                </span>
+              </div>
+            </div>
+          </div>
+      
+          <div class="order-info">
+            <div class="email-input-conti">
+              <div class="emailinput-with-span">
+                <input [(ngModel)]="user.email" [formControl]="emailInput" class="email-input" required placeholder="Your email" type="text" name="emailInput">
+                <span *ngIf="emailInput.status == 'INVALID' && emailInput.dirty">
+                  Diese Emailadresse ist ungültig!
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="order-info-birthdate">
+
+            <mat-form-field appearance="outline" class="full-width" name="birthDate">
+                <mat-label>Geburtstag</mat-label>
+                <input [(ngModel)]="user.birthDate" [disabled]="loading" [(ngModel)]="birthDate" matInput placeholder="Placeholder" [matDatepicker]="picker1" name="birthDate">
+                <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+          </div>
+      
+          <div class="order-info">
+
+            <div class="input-conti">
+              <div class="input-with-span-address">
+                <input [(ngModel)]="user.street" [formControl]="street" class="my-adress-input" required placeholder="Straße und Hausnummer" type="text" name="street">
+                <span *ngIf="street.status == 'INVALID' && street.dirty">
+                  Bitte gültige Adresse eingeben!
+                </span>
+              </div>
+  
+              <div class="input-with-span-address">
+                <input [(ngModel)]="user.zipCode" [formControl]="zipCode" class="my-adress-input" required placeholder="Postleitzahl" name="lastName">
+                <span *ngIf="zipCode.status == 'INVALID' && zipCode.dirty">
+                  Bitte gültige Postleitzahl eingeben!
+                </span>
+              </div>
+  
+              <div class="input-with-span-address">
+                <input [(ngModel)]="user.city" [formControl]="city" class="my-adress-input" required placeholder="Stadt" type="text" name="city">
+                <span *ngIf="city.status == 'INVALID' && city.dirty">
+                  Bitte gültigen Stadtnamen eingeben!
+                </span>
+              </div>
+            </div>
+            <mat-error *ngIf="wrongAdress">Adresse konnte nicht gefunden werden, bitte existierende Adresse eingeben.</mat-error>
+          </div>
+
+  
+     <div class="second-panel">
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="false" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+             Lieferzeit
+            </mat-panel-title>
+              <mat-icon>schedule</mat-icon>
+          </mat-expansion-panel-header>
+      
+          <mat-card>
+            <mat-card-content>Die Lieferzeit beträgt momentan 45-60 Minuten</mat-card-content>
+          </mat-card>
+        </mat-expansion-panel>
+      
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+            Zahlungsart
+            </mat-panel-title>
+              <mat-icon>credit_card_gear</mat-icon>
+          </mat-expansion-panel-header>
+          <mat-card>
+            <mat-card-content>Momentan ist nur Barzahlung möglich</mat-card-content>
+          </mat-card>
+        </mat-expansion-panel>
+      </mat-accordion>
+  
+
+      <div class="pay-btn" *ngIf="shoppingBasketService.endSum">
+        <button (click)="getOrder()" [disabled]="!firstName.valid || !lastName.valid || !emailInput.valid || !street.valid 
+        || !zipCode.valid || !city.valid" #sendButton>
+          Bestellen und Bezahlen mit ({{shoppingBasketService.endSum.toFixed(2).replace(".",",")}} €)
+        </button>
+      </div>
+  
+      </div>
+    </form>
+  
+  
+  
+  

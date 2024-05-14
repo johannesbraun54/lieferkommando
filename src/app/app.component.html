@@ -1,0 +1,126 @@
+<mat-drawer-container class="mat-drawer-container" autosize>
+  <mat-drawer #drawer class="sidenav" [opened]="true" mode="side" position="end">
+
+    <div class="logo-container">
+      <mat-icon (click)="drawer.toggle()" class="menu-icon">shopping_cart</mat-icon>
+      Warenkorb
+    </div>
+
+    <div class="responsive-logo-container">
+      <mat-icon *ngIf="shoppingBasketService.userAtShop" (click)="drawer.toggle()">storefront</mat-icon>
+      <mat-icon *ngIf="!shoppingBasketService.userAtShop" (click)="drawer.toggle()">credit_card</mat-icon>
+    </div>
+
+    <div *ngIf="shoppingBasketService.emptyMeal" class="empty-shopping-cart-container">
+      <mat-icon class="custom-icon">
+        shopping_bag
+      </mat-icon>
+      <h1>Fülle Deinen Warenkorb</h1>
+      <h4>Suche dir deine Lieblingsburger aus!</h4>
+    </div>
+
+    <div class="outer-card-container" *ngIf="!shoppingBasketService.emptyMeal">
+      <h1 class="cart-headline">Warenkorb</h1>
+
+      <div class="meal-in-basket" *ngFor="let meal of shoppingBasketService.localShoppingBasket; let i = index">
+        <span class="amount">{{shoppingBasketService.amounts[i]}}</span>
+
+        <div class="full-shopping-cart-container">
+          <div class="card-meal-info">
+            <span class="mealname-in-cart">
+              <span>{{meal.mealName}}</span>
+            </span>
+            <span>
+              {{shoppingBasketService.prices[i].toFixed(2).replace(".",",")}}€
+            </span>
+          </div>
+
+          <div *ngIf="shoppingBasketService.userAtShop" class="edit-meal-in-cart">
+            <div class="add-remark">
+              <span *ngIf="!meal.remark"
+                (click)="shoppingBasketService.toggleTextField(i)">Anmerkung<br>hinzufügen</span>
+              <span *ngIf="meal.remark"
+                (click)="shoppingBasketService.addRemarkToMeal(meal, i)">Anmerkung<br>bearbeiten</span>
+            </div>
+            <div class="edit-amount">
+              <div (click)="reduceMeal(meal)" class="edit-amount-btn"><mat-icon>remove</mat-icon></div>
+              <span>{{shoppingBasketService.amounts[i]}}</span>
+              <div (click)="addMeal(meal)" class="edit-amount-btn"><mat-icon>add</mat-icon></div>
+            </div>
+          </div>
+          <div *ngIf="shoppingBasketService.localShoppingBasket[i].showTextField" class="textarea-container">
+            <textarea name="" rows="4" #textareas [(ngModel)]="shoppingBasketService.textValues[i]"
+              maxlength="160"></textarea>
+          </div>
+          <span *ngIf="shoppingBasketService.localShoppingBasket[i].showTextField && !meal.remark" class="edit-remark">
+            <span (click)="shoppingBasketService.toggleTextField(i)">Abbrechen</span>
+            <span (click)="shoppingBasketService.addRemarkToMeal(meal, i)">Hinzufügen</span>
+          </span>
+          <span *ngIf="shoppingBasketService.localShoppingBasket[i].showTextField && meal.remark" class="edit-remark">
+            <span (click)="shoppingBasketService.deleteRemark(meal,i)">Löschen</span>
+            <span (click)="shoppingBasketService.addRemarkToMeal(meal, i)">Speichern</span>
+          </span>
+          <div class="remark-container" *ngIf="meal.remark">
+            <span class="remark">{{meal.remark}}</span>
+          </div>
+        </div>
+
+      </div>
+
+
+
+      <div class="pay-area-container">
+        <span class="pay-area">
+          <span>
+            Zwischensumme
+          </span>
+          <span *ngIf="shoppingBasketService.subTotal !== undefined">
+            {{shoppingBasketService.subTotal.toFixed(2).replace(".",",")}}€
+          </span>
+
+        </span>
+        <span class="pay-area">
+          <span>
+            Lieferkosten
+          </span>
+          <span>
+            1,99€
+          </span>
+        </span>
+        <span class="pay-area">
+          <span>
+            <b>Gesamt</b>
+          </span>
+          <span>
+            <b>{{shoppingBasketService.endSum.toFixed(2).replace(".",",")}}</b>
+          </span>
+        </span>
+        <div *ngIf="shoppingBasketService.userAtShop" routerLink="order" (click)="shoppingBasketService.orderMeals()"
+          class="pay-btn">
+          Bezahlen ({{shoppingBasketService.endSum.toFixed(2).replace(".",",")}}€)
+        </div>
+      </div>
+    </div>
+
+
+
+
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <span class="headline" routerLink="/">Lieferkommando</span>
+        <span *ngIf="!shoppingBasketService.orderCompleted" class="responsive-menu-icon" (click)="drawer.toggle()">
+          <span *ngIf="shoppingBasketService.sumOfProducts > 0">{{shoppingBasketService.getSumOfProducts()}}</span>
+          <mat-icon *ngIf="!shoppingBasketService.orderCompleted">shopping_cart</mat-icon>
+        </span>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <div class="router-container">
+      <router-outlet (orderIsCompleted)="closeDrawer()"></router-outlet>
+    </div>
+  </div>
+</mat-drawer-container>
+
+<app-footer (privacyClicked)="closeDrawer()" (impressumClicked)="closeDrawer()"></app-footer>

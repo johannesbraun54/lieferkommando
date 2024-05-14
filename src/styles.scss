@@ -1,0 +1,102 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+/* Breite und Farbe der Scrollbar */
+::-webkit-scrollbar {
+    width: 0px;
+    background-color: #303030;
+    /* Hintergrundfarbe der Scrollbar */
+}
+
+/* Griff der Scrollbar */
+::-webkit-scrollbar-thumb {
+    background-color: #303030;
+    /* Farbe des Scrollbalken-Griffs */
+    border-radius: 2px;
+    /* Runde Ecken für den Scrollbalken-Griff */
+}
+
+/* Hover-Zustand des Scrollbalken-Griffs */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #ff5f92;
+    /* Farbe des Scrollbalken-Griffs im Hover-Zustand */
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #303030 inset !important;
+    /* Hintergrundfarbe ändern */
+    -webkit-text-fill-color: white !important;
+    /* Schriftfarbe ändern */
+    caret-color: white !important;
+    /* Cursorfarbe ändern */
+}
+
+
+.mat-toolbar.mat-primary {
+    --mat-toolbar-container-background-color: #941a16;
+    --mat-toolbar-container-text-color: white;
+}
+
+html .mat-mdc-mini-fab.mat-primary {
+    --mdc-fab-small-container-color: #941a16;
+    --mat-fab-small-foreground-color: #fff;
+    --mat-fab-small-state-layer-color: #fff;
+    --mat-fab-small-ripple-color: rgba(255, 255, 255, 0.1);
+}
+
+html {
+    --mat-datepicker-calendar-date-selected-state-text-color: white;
+    --mat-datepicker-calendar-date-selected-state-background-color: #941a16;
+    --mat-datepicker-calendar-date-selected-disabled-state-background-color: #941a16;
+    --mat-datepicker-calendar-date-today-selected-state-outline-color: white;
+    --mat-datepicker-calendar-date-focus-state-background-color: #941a16;
+    --mat-datepicker-calendar-date-hover-state-background-color: #941a16;
+    --mat-datepicker-toggle-active-state-icon-color: #941a16;
+    --mat-datepicker-calendar-date-in-range-state-background-color: rgba(194, 24, 91, 0.2);
+    --mat-datepicker-calendar-date-in-comparison-range-state-background-color: rgba(249, 171, 0, 0.2);
+    --mat-datepicker-calendar-date-in-overlap-range-state-background-color: #a8dab5;
+    --mat-datepicker-calendar-date-in-overlap-range-selected-state-background-color: #46a35e;
+    --mat-datepicker-toggle-icon-color: white;
+    --mat-datepicker-calendar-body-label-text-color: rgba(255, 255, 255, 0.7);
+    --mat-datepicker-calendar-period-button-text-color: #fff;
+    --mat-datepicker-calendar-period-button-icon-color: white;
+    --mat-datepicker-calendar-navigation-button-icon-color: white;
+    --mat-datepicker-calendar-header-divider-color: rgba(255, 255, 255, 0.12);
+    --mat-datepicker-calendar-header-text-color: rgba(255, 255, 255, 0.7);
+    --mat-datepicker-calendar-date-today-outline-color: rgba(255, 255, 255, 0.5);
+    --mat-datepicker-calendar-date-today-disabled-state-outline-color: rgba(255, 255, 255, 0.3);
+    --mat-datepicker-calendar-date-text-color: white;
+    --mat-datepicker-calendar-date-outline-color: transparent;
+    --mat-datepicker-calendar-date-disabled-state-text-color: rgba(255, 255, 255, 0.5);
+    --mat-datepicker-calendar-date-preview-state-outline-color: rgba(255, 255, 255, 0.24);
+    --mat-datepicker-range-input-separator-color: white;
+    --mat-datepicker-range-input-disabled-state-separator-color: rgba(255, 255, 255, 0.5);
+    --mat-datepicker-range-input-disabled-state-text-color: rgba(255, 255, 255, 0.5);
+    --mat-datepicker-calendar-container-background-color: #424242;
+    --mat-datepicker-calendar-container-text-color: white;
+    --mdc-outlined-text-field-focus-outline-color: #941a16;
+    --mdc-outlined-text-field-focus-label-text-color: #941a16;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 12px!important;
+    width: 50vw!important;
+    max-width: 600px!important;
+    max-height: 1000px!important;
+}
+
+@media(max-width: 768px){
+    .mat-mdc-dialog-container .mdc-dialog__surface {
+        width: 85vw!important;
+    }  
+}

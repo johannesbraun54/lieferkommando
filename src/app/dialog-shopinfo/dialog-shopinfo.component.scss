@@ -1,0 +1,50 @@
+.headline {
+    color: white;
+    font-size: 22px;
+    padding: 12px;
+    margin-left: 12px;
+}
+
+google-map{
+    position: relative;
+}
+
+.adress-window{
+    top: 140px;
+    width: 33%;
+    max-width: 200px;
+    left: 33%;
+    padding: 8px;
+    position: absolute;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 12px
+}
+
+.sub-headline {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 16px;
+    padding: 12px;
+    margin-left: 12px;
+    gap: 8px;
+}
+
+.opening-info {
+    padding: 24px;
+    background-color: #303030;
+    border-radius: 12px;
+    margin-right: 24px;
+    margin-left: 24px;
+    margin-bottom: 24px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+        display: flex;
+        flex-direction: column;
+    }
+}

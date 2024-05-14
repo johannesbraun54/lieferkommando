@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "test-simple-crm": {
+      "hosting": {
+        "lieferkommando": [
+          "lieferkommando"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "test-simple-crm"
+  }
+}
