@@ -1,4 +1,4 @@
-<img class="atf-image" src="../../assets/burgerBackground.jpeg">
+<img draggable="false" class="atf-image" src="../../assets/burgerBackground.jpeg">
 <div class="shop-header">
     <span class="shop-headline">
         <h1>Braun's Burger Bude</h1>
@@ -23,12 +23,12 @@
 <div class="product-container">
     <h1>Hausgemachte Burger</h1>
 
-    <div class="product" (click)="openExpandOrderDialog(meal)" *ngFor="let meal of allMeals; let i = index">
+    <div class="product" (click)="openExpandOrderDialog(meal)" *ngFor="let meal of shoppingBasketService.allMeals; let i = index">
         <div class="product-header">
             <b>{{meal.mealName}}</b>
             <button mat-mini-fab color="primary">
-                <mat-icon *ngIf="!shoppingBasketService.amounts[i]">add</mat-icon>
-                <span style="font-size: 18px;">{{shoppingBasketService.amounts[i]}}</span>
+                <mat-icon *ngIf="shoppingBasketService.mealAmounts[i] < 1">add</mat-icon>
+                <span *ngIf="shoppingBasketService.mealAmounts[i] >= 1" style="font-size: 18px;">{{shoppingBasketService.mealAmounts[i]}}</span>
             </button>
         </div>
         <span>{{meal.description}}</span>

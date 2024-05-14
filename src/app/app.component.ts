@@ -37,13 +37,13 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   prices!: number[];
   @ViewChild('drawer') drawer!: MatDrawer;
   private resizeListener!: () => void;
-  private orderCompletedSubscription!: Subscription;
 
 
   constructor(public shoppingBasketService: ShoppingBasketService, private renderer: Renderer2, private router: Router) {
     this.shoppingBasketService.loadDataFromLocalStorage();
     this.shoppingBasketService.getSumOfProducts();
     this.goToImprint();
+
   }
 
   goToImprint() {

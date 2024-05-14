@@ -28,27 +28,21 @@ import { DialogExpandOrderComponent } from '../dialog-expand-order/dialog-expand
 })
 export class ShopComponent {
   firestore: Firestore = inject(Firestore);
-  unsubMealsList;
-  meal: Meal = new Meal();
-  allMeals: Meal[] = [];
 
+  meal: Meal = new Meal();
 
   constructor(public shoppingBasketService: ShoppingBasketService, public dialog: MatDialog,) {
     this.shoppingBasketService.orderCompleted = false;
     this.shoppingBasketService.userAtShop = true;
-    this.unsubMealsList = onSnapshot(this.getMealRef(), (mealsList) => {
-      mealsList.forEach((m) => {
-        let meal = m.data() as Meal;
-        this.allMeals.push(meal);
-      });
-    })
+    this.shoppingBasketService.getMealsList();
+    console.log(shoppingBasketService.mealAmounts);
   }
 
   openInfoDialog() {
     this.dialog.open(DialogShopinfoComponent);
   }
 
-  openExpandOrderDialog(meal:Meal) {
+  openExpandOrderDialog(meal: Meal) {
     const dialog = this.dialog.open(DialogExpandOrderComponent);
     dialog.componentInstance.meal = new Meal(meal);
   }

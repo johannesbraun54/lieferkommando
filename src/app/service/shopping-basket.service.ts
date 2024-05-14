@@ -2,7 +2,7 @@ import { ElementRef, Inject, Injectable, QueryList, ViewChildren, inject, viewCh
 import { DOCUMENT } from '@angular/common';
 import { Meal } from '../models/meal.class';
 import { Purchase } from '../models/purchase.class';
-import { Firestore, collection, doc } from '@angular/fire/firestore';
+import { Firestore, collection, doc, onSnapshot } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -25,10 +25,26 @@ export class ShoppingBasketService {
   userAtImprint = false;
   dialogMealAmount: number = 1;
   dialogMealSum!: number;
-
+  mealAmounts: number[] = [];
+  unsubMealsList!:any;
+  allMeals:Meal[] = [];
 
   constructor(@Inject(DOCUMENT) public document: Document) {
     this.localStorage = this.document.defaultView?.localStorage;
+  }
+
+  getMealsList(){
+    this.unsubMealsList = onSnapshot(this.getMealRef(), (mealsList) => {
+      mealsList.forEach((m) => {
+        let meal = m.data() as Meal;
+        this.allMeals.push(meal);
+        this.createAmounts(meal);
+      });
+    })
+  }
+
+  getMealRef() {
+    return collection(this.firestore, 'meals');
   }
 
   toggleTextField(index: number): void {
@@ -59,33 +75,53 @@ export class ShoppingBasketService {
     this.purchase.prices = this.prices;
   }
 
-  reduceDialogMeal(meal:Meal) {
+  reduceDialogMeal(meal: Meal) {
     this.dialogMealAmount <= 1 ? this.dialogMealAmount = 1 : this.dialogMealAmount--;
     this.dialogMealSum = meal.price * this.dialogMealAmount;
+    this.getMealsList();
   }
 
   increaseDialogMeal(meal: Meal) {
     this.dialogMealAmount++;
     this.dialogMealSum = meal.price * this.dialogMealAmount;
+    this.getMealsList();
+  }
+
+  createAmounts(meal: Meal) {
+    let currentMeal = meal;
+    let index = this.localShoppingBasket.findIndex(m => m.mealName == currentMeal.mealName);
+    let amount = this.amounts[index];
+    amount ? this.mealAmounts.push(amount) : this.mealAmounts.push(0);
+  }
+
+  countAmounts() {
+    for (let i = 0; i < this.allMeals.length; i++) {
+      const meal = this.allMeals[i];
+      let index = this.localShoppingBasket.findIndex(m => m.mealName == meal.mealName);
+      let amount = this.amounts[index];
+      amount ? this.mealAmounts[i] = amount : this.mealAmounts[i] = 0;   
+    }
   }
 
   addMeal(currentMeal: Meal) {
     this.emptyMeal = false;
-    let price = currentMeal.price * this.dialogMealAmount
-    let mealToAdd = currentMeal
+    let price = currentMeal.price * this.dialogMealAmount;
+    let mealToAdd = currentMeal;
     let index = this.localShoppingBasket.findIndex(meal => meal.mealName === mealToAdd.mealName);
     if (index == -1) {
       this.prices.push(price);
       this.amounts.push(this.dialogMealAmount);
       this.localShoppingBasket.push(mealToAdd);
       this.sumOfPrices();
-      this.getSumOfProducts()
+      this.getSumOfProducts();
+      this.countAmounts();
       this.saveDataInLocalStorage();
     } else {
       this.amounts[index] += this.dialogMealAmount;
       this.prices[index] = this.prices[index] + price;
       this.sumOfPrices();
-      this.getSumOfProducts()
+      this.getSumOfProducts();
+      this.countAmounts();
       this.saveDataInLocalStorage();
     }
   }
@@ -98,8 +134,10 @@ export class ShoppingBasketService {
       this.amounts[index]--;
       this.prices[index] -= meal.price;
       this.sumOfPrices();
-      this.getSumOfProducts()
+      this.getSumOfProducts();
       this.saveDataInLocalStorage();
+      this.getMealsList();
+      this.countAmounts();
     }
   }
 
@@ -109,7 +147,8 @@ export class ShoppingBasketService {
     this.sumOfPrices();
     this.localShoppingBasket.splice(index, 1);
     this.localShoppingBasket.length < 1 ? this.emptyMeal = true : this.emptyMeal = false;
-    this.getSumOfProducts()
+    this.getSumOfProducts();
+    this.countAmounts();
     this.saveDataInLocalStorage();
   }
 
