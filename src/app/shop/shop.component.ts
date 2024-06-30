@@ -35,7 +35,6 @@ export class ShopComponent {
     this.shoppingBasketService.orderCompleted = false;
     this.shoppingBasketService.userAtShop = true;
     this.shoppingBasketService.getMealsList();
-    console.log(shoppingBasketService.mealAmounts);
   }
 
   openInfoDialog() {
@@ -45,6 +44,7 @@ export class ShopComponent {
   openExpandOrderDialog(meal: Meal) {
     const dialog = this.dialog.open(DialogExpandOrderComponent);
     dialog.componentInstance.meal = new Meal(meal);
+
   }
 
   addToBasket(meal: Meal) {

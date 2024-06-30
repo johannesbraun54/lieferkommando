@@ -72,6 +72,13 @@
     }
 }
 
+.burger-extras{
+    font-weight: 600;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
 @media(max-width:480px) {
     .edit-amount-btn {
         padding: 4px;

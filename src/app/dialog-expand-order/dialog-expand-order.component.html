@@ -9,6 +9,17 @@
     <span style="margin-top: 16px; font-size: 18px;">
         <b>{{meal.price.toFixed(2).replace(".", ",")}}€</b>
     </span>
+
+    <!--
+    <div class="burger-extras">
+        <span>Extras zum Burger</span>
+        <span *ngFor="let supplement of supplementsArray">
+            <mat-checkbox (click)="chooseSupplement(supplement)" class="example-margin">mit {{supplement.name}} extra
+                ({{supplement.price}})</mat-checkbox>
+        </span>
+    </div>
+    -->
+
     <div class="dialog-footer">
         <span class="edit-amount">
             <mat-icon (click)="shoppingBasketService.reduceDialogMeal(meal)" class="edit-amount-btn">remove</mat-icon>
@@ -16,9 +27,7 @@
             <mat-icon (click)="shoppingBasketService.increaseDialogMeal(meal)" class="edit-amount-btn">add</mat-icon>
         </span>
         <span (click)="addMealToBasket(meal)" *ngIf="shoppingBasketService.userAtShop" class="pay-btn">
-            <span
-                *ngIf="shoppingBasketService.dialogMealAmount > 1">{{shoppingBasketService.dialogMealSum.toFixed(2).replace(".",",")}}€</span>
-            <span *ngIf="shoppingBasketService.dialogMealAmount == 1">{{meal.price.toFixed(2).replace(".",",")}}€</span>
+            <span>{{shoppingBasketService.dialogMealSum.toFixed(2).replace(".",",")}}€</span>
         </span>
     </div>
 </div>

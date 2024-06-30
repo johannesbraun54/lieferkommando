@@ -26,14 +26,15 @@ export class ShoppingBasketService {
   dialogMealAmount: number = 1;
   dialogMealSum!: number;
   mealAmounts: number[] = [];
-  unsubMealsList!:any;
-  allMeals:Meal[] = [];
+  unsubMealsList!: any;
+  allMeals: Meal[] = [];
 
   constructor(@Inject(DOCUMENT) public document: Document) {
     this.localStorage = this.document.defaultView?.localStorage;
   }
 
-  getMealsList(){
+  getMealsList() {
+    this.allMeals = [];
     this.unsubMealsList = onSnapshot(this.getMealRef(), (mealsList) => {
       mealsList.forEach((m) => {
         let meal = m.data() as Meal;
@@ -76,15 +77,17 @@ export class ShoppingBasketService {
   }
 
   reduceDialogMeal(meal: Meal) {
+    this.dialogMealAmount === 1 ? this.dialogMealSum = meal.price : this.dialogMealSum = meal.price * this.dialogMealAmount;
     this.dialogMealAmount <= 1 ? this.dialogMealAmount = 1 : this.dialogMealAmount--;
-    this.dialogMealSum = meal.price * this.dialogMealAmount;
-    this.getMealsList();
+    //this.getMealsList();
   }
 
+
   increaseDialogMeal(meal: Meal) {
+    this.dialogMealAmount === 1 ? this.dialogMealSum = meal.price : this.dialogMealSum = meal.price * this.dialogMealAmount;
     this.dialogMealAmount++;
     this.dialogMealSum = meal.price * this.dialogMealAmount;
-    this.getMealsList();
+    //this.getMealsList();
   }
 
   createAmounts(meal: Meal) {
@@ -99,7 +102,7 @@ export class ShoppingBasketService {
       const meal = this.allMeals[i];
       let index = this.localShoppingBasket.findIndex(m => m.mealName == meal.mealName);
       let amount = this.amounts[index];
-      amount ? this.mealAmounts[i] = amount : this.mealAmounts[i] = 0;   
+      amount ? this.mealAmounts[i] = amount : this.mealAmounts[i] = 0;
     }
   }
 

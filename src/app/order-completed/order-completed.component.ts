@@ -18,6 +18,7 @@ export class OrderCompletedComponent {
     this.shoppingBasketService.prices = [];
     this.shoppingBasketService.sumOfPrices();
     this.shoppingBasketService.saveDataInLocalStorage();
+    this.shoppingBasketService.mealAmounts = [];
   }
 
 
